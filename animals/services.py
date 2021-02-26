@@ -32,7 +32,16 @@ class PredatorMovement:
         self.predator.save()
 
     def get_rabbits(self):
-        rabbits = Animal.objects.filter(latitude__range=[self.latitude - 2, self.latitude + 2],
-                                        longitude__range=[self.longitude - 2, self.longitude + 2],
-                                        animal_type__name='Rabbit', is_caught=False)
-        return rabbits
+        return Animal.objects.filter(latitude__range=[self.latitude - 2, self.latitude + 2],
+                                     longitude__range=[self.longitude - 2, self.longitude + 2],
+                                     animal_type__name='Rabbit', is_caught=False)
+
+
+class FindRabbits:
+    def get_response_data(self):
+        serialized_rabbits = RabbitsSerializer.serialize(self.get_rabbits())
+        return {'rabbits': serialized_rabbits}
+
+    @staticmethod
+    def get_rabbits():
+        return Animal.objects.filter(animal_type__name='Rabbit', is_caught=False)
