@@ -36,6 +36,14 @@ class PredatorMovement:
                                      longitude__range=[self.longitude - 2, self.longitude + 2],
                                      animal_type__name='Rabbit', is_caught=False)
 
+    def alternative_get_rabbits(self):
+        return list(Animal.objects.raw('''SELECT * FROM animals_animal 
+            WHERE  animal_type_id = (SELECT id FROM animals_animaltype WHERE name='Rabbit') 
+            AND latitude BETWEEN %d and %d 
+            AND longitude BETWEEN %d AND %d;'''
+                                       % (self.latitude - 2, self.latitude + 2, self.longitude - 2, self.longitude + 2))
+                    )
+
 
 class FindRabbits:
     def get_response_data(self):

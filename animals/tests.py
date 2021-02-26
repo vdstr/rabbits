@@ -15,7 +15,11 @@ class TestPredatorMovement(TestCase):
                                   latitude=1+rabbit, longitude=1+rabbit, is_caught=False)
 
     def test_get_rabbits(self):
-        self.assertEqual(True, True)
         service = PredatorMovement(self.predator.code, self.predator.latitude, self.predator.longitude)
         rabbits = service.get_rabbits()
         self.assertEqual(rabbits.count(), 5)
+
+    def test_alternative_get_rabbits(self):
+        service = PredatorMovement(self.predator.code, self.predator.latitude, self.predator.longitude)
+        rabbits = service.alternative_get_rabbits()
+        self.assertEqual(len(rabbits), 5)
