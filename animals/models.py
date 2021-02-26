@@ -16,6 +16,7 @@ class Animal(models.Model):
     code = models.PositiveIntegerField(verbose_name='Code of animal', unique=True)
     latitude = models.FloatField(verbose_name='Latitude of animal')
     longitude = models.FloatField(verbose_name='Longitude of animal')
+    is_caught = models.BooleanField(verbose_name='Is caught?', default=False)
 
     def __str__(self):
         return f'#{self.code} {self.name} ({self.animal_type})'
